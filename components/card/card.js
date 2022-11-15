@@ -2,6 +2,15 @@ export function createCharacterCard(character) {
   const newCard = document.createElement("li");
   const cardContainer = document.querySelector('[data-js="card-container"]');
   newCard.classList.add("card");
+
+  function type() {
+    if (character.type === "") {
+      return character.species;
+    } else {
+      return character.type;
+    }
+  }
+
   newCard.innerHTML = `<div class="card__image-container">
   <img
     class="card__image"
@@ -16,9 +25,9 @@ export function createCharacterCard(character) {
     <dt class="card__info-title">Status</dt>
     <dd class="card__info-description">${character.status}</dd>
     <dt class="card__info-title">Type</dt>
-    <dd class="card__info-description">${character.type}</dd>
+    <dd class="card__info-description">${type()}</dd>
     <dt class="card__info-title">Occurrences</dt>
-    <dd class="card__info-description">${character.episode}</dd>
+    <dd class="card__info-description">${character.episode.length}</dd>
   </dl>
 </div>`;
   cardContainer.append(newCard);
