@@ -61,6 +61,7 @@ main {
 }
 
 .card-container {
+  /*border: solid 1px red;*/
   display: grid;
   gap: 2rem;
   padding: 20px;
