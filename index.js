@@ -51,7 +51,7 @@ nextButton.addEventListener("click", () => {
   if (page > 1) {
     prevButton.disabled = false;
   }
-  if (page === 42) {
+  if (page === maxPage) {
     nextButton.disabled = true;
   }
 });
