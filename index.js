@@ -2,6 +2,7 @@ import { createCharacterCard } from "./components/card/card.js";
 import { createButtonNext } from "./components/nav-button/nav-button.js";
 import { createButtonPrev } from "./components/nav-button/nav-button.js";
 import { createPagination } from "./components/nav-pagination/nav-pagination.js";
+import { createSearchBar } from "./components/search-bar/search-bar.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -65,8 +66,10 @@ navigation.append(
 
 // search bar
 
-searchBar.addEventListener("submit", (event) => {
-  event.preventDefault();
-  searchQuery = searchBar.query.value;
-  fetchCharacters();
-});
+searchBarContainer.append(
+  createSearchBar((event) => {
+    event.preventDefault();
+    searchQuery = event.target.query.value;
+    fetchCharacters();
+  })
+);
