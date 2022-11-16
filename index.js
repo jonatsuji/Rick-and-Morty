@@ -1,4 +1,8 @@
 import { createCharacterCard } from "./components/card/card.js";
+import { createButtonNext } from "./components/nav-button/nav-button.js";
+import { createButtonPrev } from "./components/nav-button/nav-button.js";
+import { createPagination } from "./components/nav-pagination/nav-pagination.js";
+import { createSearchBar } from "./components/search-bar/search-bar.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -6,9 +10,8 @@ const searchBarContainer = document.querySelector(
 );
 const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
-const prevButton = document.querySelector('[data-js="button-prev"]');
-const nextButton = document.querySelector('[data-js="button-next"]');
-const pagination = document.querySelector('[data-js="pagination"]');
+//const prevButton = document.querySelector('[data-js="button-prev"]');
+//const nextButton = document.querySelector('[data-js="button-next"]');
 
 // States
 let maxPage = 42;
@@ -36,6 +39,7 @@ async function fetchCharacters() {
   } catch (error) {
     console.error("ERROR");
   }
+  const pagination = document.querySelector('[data-js="pagination"]');
   pagination.innerHTML = `${page} / ${maxPage}`;
 
   console.log(url);
@@ -44,34 +48,28 @@ fetchCharacters();
 
 //Buttons
 
-nextButton.addEventListener("click", () => {
-  page++;
-  fetchCharacters();
+navigation.append(
+  createButtonPrev(() => {
+    page--;
+    fetchCharacters();
+  })
+);
 
-  if (page > 1) {
-    prevButton.disabled = false;
-  }
-  if (page === maxPage) {
-    nextButton.disabled = true;
-  }
-});
+navigation.append(createPagination(page, maxPage));
 
-prevButton.addEventListener("click", () => {
-  if (page === 1) {
-    prevButton.disabled = true;
-    return;
-  }
-  if (page < 42) {
-    nextButton.disabled = false;
-  }
-  page--;
-  fetchCharacters();
-});
+navigation.append(
+  createButtonNext(() => {
+    page++;
+    fetchCharacters();
+  })
+);
 
 // search bar
 
-searchBar.addEventListener("submit", (event) => {
-  event.preventDefault();
-  searchQuery = searchBar.query.value;
-  fetchCharacters();
-});
+searchBarContainer.append(
+  createSearchBar((event) => {
+    event.preventDefault();
+    searchQuery = event.target.query.value;
+    fetchCharacters();
+  })
+);
